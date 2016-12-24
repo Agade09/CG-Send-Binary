@@ -1,6 +1,10 @@
 # CG-Send-Binary
 Convert your locally compiled binary to a C++ code/text format that you can use on Codingame.com
 
+What it does:
+* Converts the binary to base64 text encoding
+* Outputs a .cpp file with code to recreate the binary file on the CG servers and run it
+
 How to use:
 * Compile this tool 
 * Compile your AI as a linux binary
