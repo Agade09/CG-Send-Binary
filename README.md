@@ -10,6 +10,7 @@ How to use:
 I recommend you also:
 * Strip the binary
 * Compress it with [UPX](https://upx.github.io/)
+
 before using this tool, to reduce the chance of hitting the 100ko code size limit of Codingame
 
 Credits:
