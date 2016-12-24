@@ -10,6 +10,7 @@ How to use:
 I recommend you also:
 * Strip the binary
 * Compress it with UPX
+before using this tool, to reduce the chance of hitting the 100ko code size limit of Codingame
 
 Credits:
 * Base64 code was copied from http://www.adp-gmbh.ch/cpp/common/base64.html
