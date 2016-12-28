@@ -19,4 +19,4 @@ before using this tool, to reduce the chance of hitting the 100ko code size limi
 
 Credits:
 * Base64 code was copied from http://www.adp-gmbh.ch/cpp/common/base64.html
-* Original idea is from [CPC]rOut on Codingame.com
+* Original idea is from [[CPC]rOut](https://www.codingame.com/forum/t/neural-network-ressources/1667/17) on Codingame.com
