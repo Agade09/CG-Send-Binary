@@ -9,7 +9,7 @@ How to use:
 * Compile this tool 
 * Compile your AI as a linux binary
 * Run this tool on the linux binary
-* Use the "_Base64.cpp" file as your program on Codingame
+* Use the "_Base85.cpp" file as your program on Codingame
 
 I recommend you also:
 * Strip the binary
@@ -18,5 +18,4 @@ I recommend you also:
 before using this tool, to reduce the chance of hitting the 100ko code size limit of Codingame
 
 Credits:
-* Base64 code was copied from http://www.adp-gmbh.ch/cpp/common/base64.html
 * Original idea is from [[CPC]rOut](https://www.codingame.com/forum/t/neural-network-ressources/1667/17) on Codingame.com
