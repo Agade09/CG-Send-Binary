@@ -10,6 +10,7 @@ char de85[256];
 
 constexpr char half1[]=
 "#pragma GCC optimize(\"Ofast,inline,omit-frame-pointer,unroll-loops\")\n"
+"#include<algorithm>\n"
 "#include <fstream>\n"
 "using namespace std;\n"
 
@@ -22,24 +23,21 @@ constexpr char half2[]="\"};"
 "string decode_85(const string &base85_string){"
 	"string out;"
 	"size_t str_ptr{0};"
-	"while(str_ptr<base85_string.size()-1){"
-		"int cnt{min(static_cast<size_t>(4),base85_string.size()-str_ptr-1)};"
+	"while(str_ptr<base85_string.size()){"
 		"unsigned int acc{0};"
-		"for(int i=0;i<4;++i){"
+		"for(int i=0;i<5;++i){"
 			"unsigned char ch=base85_string[str_ptr++];"
-			"int de{de85[ch]-1};"
+			"int de{de85[ch]};"
 			"acc=acc*85+de;"
 		"}"
-		"unsigned char ch{base85_string[str_ptr++]};"
-		"int de{de85[ch]-1};"
-		"if (0xffffffff / 85 < acc || 0xffffffff - de < (acc*=85)){"
-		    "throw(0);"
+		"string sub;"
+		"for(int i=0;i<4;++i){"
+			"int val=acc%256;"
+			"acc/=256;"
+			"sub+=static_cast<char>(val);"
 		"}"
-		"acc+=de;"
-		"for(int i=0;i<cnt;++i){"
-			"acc = (acc << 8) | (acc >> 24);"
-			"out+=static_cast<char>(acc);"
-		"}"
+		"reverse(sub.begin(),sub.end());"
+		"out+=sub;"
 	"}"
 	"return out;"
 "}"
@@ -47,7 +45,7 @@ constexpr char half2[]="\"};"
 "int main(){"
 	"for(int i=0;i<85;i++){"
 		"int ch{en85[i]};"
-		"de85[ch]=i+1;"
+		"de85[ch]=i;"
 	"}"
 	"const string Program_Binary{decode_85(Base85_Binary)};"
 	"ofstream Program_File(\"Binary\",ios::binary | ios::trunc);"
@@ -60,24 +58,21 @@ constexpr char half2[]="\"};"
 string decode_85(const string &base85_string){
 	string out;
 	size_t str_ptr{0};
-	while(str_ptr<base85_string.size()-1){
-		int cnt=min(static_cast<size_t>(4),base85_string.size()-str_ptr-1);
+	while(str_ptr<base85_string.size()){
 		unsigned int acc{0};
-		for(int i=0;i<4;++i){
+		for(int i=0;i<5;++i){
 			unsigned char ch=base85_string[str_ptr++];
-			int de{de85[ch]-1};
+			int de{de85[ch]};
 			acc=acc*85+de;
 		}
-		unsigned char ch=base85_string[str_ptr++];
-		int de{de85[ch]-1};
-		if (0xffffffff / 85 < acc || 0xffffffff - de < (acc*=85)){
-		    throw(0);
+		string sub;
+		for(int i=0;i<4;++i){
+			int val=acc%256;
+			acc/=256;
+			sub+=static_cast<char>(val);
 		}
-		acc+=de;
-		for(int i=0;i<cnt;++i){
-			acc = (acc << 8) | (acc >> 24);
-			out+=static_cast<char>(acc);
-		}
+		reverse(sub.begin(),sub.end());
+		out+=sub;
 	}
 	return out;
 }
@@ -87,12 +82,10 @@ string encode_85(const vector<unsigned char> &data){
 	int data_ptr{0};
 	while(data_ptr<data.size()){
 		unsigned int acc{0};
-		for(int cnt=24;cnt>=0;cnt-=8){
-			unsigned int ch=data[data_ptr++];
-			acc|=ch<<cnt;
-			if(data_ptr==data.size()){
-				break;
-			}
+		int bytes{min(static_cast<size_t>(4),data.size()-data_ptr)};
+		for(int i=0;i<bytes;++i){
+			unsigned char ch=data[data_ptr++];
+			acc+=pow(256,3-i)*ch;
 		}
 		string sub;
 		for(int i=0;i<5;++i){
@@ -122,7 +115,7 @@ int main(int argc,char** argv){
 	Program_File.read(reinterpret_cast<char*>(Program_Binary.data()),size);
 	for(int i=0;i<85;i++){
 		int ch{en85[i]};
-		de85[ch]=i+1;
+		de85[ch]=i;
 	}
 	const string base85_Program_Binary=encode_85(Program_Binary);
 	ofstream Program_Base85_File(Program_Name+"_Base85.cpp",ios::trunc);
