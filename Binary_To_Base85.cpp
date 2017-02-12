@@ -82,7 +82,7 @@ string encode_85(const vector<unsigned char> &data){
 	int data_ptr{0};
 	while(data_ptr<data.size()){
 		unsigned int acc{0};
-		int bytes{min(static_cast<size_t>(4),data.size()-data_ptr)};
+		int bytes=min(static_cast<size_t>(4),data.size()-data_ptr);
 		for(int i=0;i<bytes;++i){
 			unsigned char ch=data[data_ptr++];
 			acc+=pow(256,3-i)*ch;
