@@ -16,6 +16,7 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
 	strip -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag "$AI_Name"
 	upx "$AI_Name" -9 --best --ultra-brute --no-backup --force
 	Binary_To_Base85 "$AI_Name" #Make the copy-pastable .cpp file containing the base85-encoded binary
+	
 	#Cleanup
 	rm "$AI_Name" #Remove the AI binary
 	rm "$AI_Name"_nopragma.cpp #Remove the copy of your code
