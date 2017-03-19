@@ -15,6 +15,9 @@ I recommend you also:
 * Strip the binary
 * Compress it with [UPX](https://upx.github.io/)
 
+Caution:
+* If you compile with a different version of gcc to what CG is using the binary may not run due to looking for a non-existing version of libstdc++
+
 before using this tool, to reduce the chance of hitting the 100ko code size limit of Codingame
 
 Credits:
