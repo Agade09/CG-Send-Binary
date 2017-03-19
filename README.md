@@ -18,7 +18,7 @@ Convert your locally compiled binary to a C++ code/text format that you can use 
 before using this tool, to reduce the chance of hitting the 100ko code size limit of Codingame
 
 ## Caution:
-* If you compile your AI with a different version of gcc to what CG is using the binary may not run due to looking for a non-existing version of libstdc++
+* If you compile your AI with a different version of the compiler to what CG is using the binary may not run due to looking for a non-existing version of the runtime libraries
 
 ## Credits:
 * Original idea is from [[CPC]rOut](https://www.codingame.com/forum/t/neural-network-ressources/1667/17) on Codingame.com
