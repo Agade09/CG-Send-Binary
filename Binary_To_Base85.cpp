@@ -11,7 +11,7 @@ char de85[256];
 constexpr char half1[]=
 "#pragma GCC optimize(\"Ofast,inline,omit-frame-pointer,unroll-loops\")\n"
 "#include<algorithm>\n"
-"#include <fstream>\n"
+"#include<fstream>\n"
 "using namespace std;\n"
 
 "constexpr char en85[]{\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~\"};\n"
