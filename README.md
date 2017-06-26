@@ -22,5 +22,5 @@ before using this tool, to reduce the chance of hitting the 100ko code size limi
 
 The included Base85.sh shell script is meant as an **example** of using this tool. It will not work on your machine if your not on linux, your PATH is not correct and/or you have not installed UPX.
 
-## Credits:
+## Acknowledgements:
 * Original idea is from [[CPC]rOut](https://www.codingame.com/forum/t/neural-network-ressources/1667/17) on Codingame.com
