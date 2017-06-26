@@ -20,6 +20,7 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
 	#Cleanup
 	rm "$AI_Name" #Remove the AI binary
 	rm "$AI_Name"_nopragma.cpp #Remove the copy of your code
+	xclip -selection c <  "$AI_Name"_Base85.cpp
 else
 	echo "Could not find $AI_Name.cpp"
 fi
