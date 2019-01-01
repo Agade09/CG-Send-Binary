@@ -10,7 +10,7 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
 	sed -i '/^#pragma/d' "$AI_Name"_nopragma.cpp
 
 	#Compile your AI with whatever options you like
-	g++-7 "$AI_Name"_nopragma.cpp -o "$AI_Name" -Ofast -std=c++11 -w -s -fno-rtti -fno-math-errno
+	g++-8 "$AI_Name"_nopragma.cpp -o "$AI_Name" -Ofast -std=c++17 -w -s -fno-rtti -fno-math-errno
 
 	#strip+UPX to reduce the size of the binary without affecting correctness or performance
 	strip -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag "$AI_Name"
