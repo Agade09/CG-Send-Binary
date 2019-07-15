@@ -8,7 +8,8 @@ Convert your locally compiled binary to a C++ code/text format that you can use 
 ## How to use:
 * Compile this tool 
 * Compile your AI as a linux binary
-* Run this tool on the linux binary
+* Run this tool on the linux binary (e.g: Binary_To_Base85 MyBinary)
+* Optionally pass a third argument, a source code file to be appended as a comment (e.g: Binary_To_Base85 MyBinary MySource.cpp) 
 * Use the "_Base85.cpp" file as your program on Codingame
 
 ## Caution:
