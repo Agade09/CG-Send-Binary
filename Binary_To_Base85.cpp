@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
+#include <sstream>
 using namespace std;
 
 constexpr char en85[]{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~"};
@@ -101,19 +102,19 @@ string encode_85(const vector<unsigned char> &data){
 }
 
 int main(int argc,char** argv){
-	if(argc!=2){
-		cerr << "Program takes one argument, the name of the program to convert to base 85" << endl;
+	if(argc<2){
+		cerr << "Program takes at least one argument, the name of the program to convert to base 85" << endl;
 	}
-	string Program_Name{argv[1]};
+	const string Program_Name{argv[1]};
 	ifstream Program_File(Program_Name,ios::binary | ios::ate);
 	if(!Program_File){
 		cerr << "Couldn't open " << Program_Name << endl;
 		return 0;
 	}
-	streamsize size = Program_File.tellg();
+	const streamsize binary_size{Program_File.tellg()};
 	Program_File.seekg(0,ios::beg);
-	vector<unsigned char> Program_Binary(size);
-	Program_File.read(reinterpret_cast<char*>(Program_Binary.data()),size);
+	vector<unsigned char> Program_Binary(binary_size);
+	Program_File.read(reinterpret_cast<char*>(Program_Binary.data()),binary_size);
 	for(int i=0;i<85;i++){
 		int ch{en85[i]};
 		de85[ch]=i;
@@ -121,4 +122,21 @@ int main(int argc,char** argv){
 	const string base85_Program_Binary=encode_85(Program_Binary);
 	ofstream Program_Base85_File(Program_Name+"_Base85.cpp",ios::trunc);
 	Program_Base85_File << half1 << base85_Program_Binary << half2 << endl;
+
+	if(argc>=3){//Append source code as comment
+		const string Source_Filename{argv[2]};
+		ifstream Source_File(Source_Filename,ios::ate);
+		const streamsize source_size{Source_File.tellg()};
+		cerr << source_size << endl;
+		Source_File.seekg(0,ios::beg);
+		vector<char> Source(source_size);
+		Source_File.read(reinterpret_cast<char*>(Source.data()),source_size);
+		const string source_code(Source.begin(),Source.end());
+		stringstream source_code_ss(source_code);
+		while(source_code_ss){
+			string line;
+			getline(source_code_ss,line);
+			Program_Base85_File << "//" << line << '\n';
+		}
+	}
 }
