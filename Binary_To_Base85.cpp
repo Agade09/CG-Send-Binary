@@ -4,7 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include <sstream>
 using namespace std;
 
 constexpr char en85[]{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~"};
@@ -132,11 +131,8 @@ int main(int argc,char** argv){
 		vector<char> Source(source_size);
 		Source_File.read(reinterpret_cast<char*>(Source.data()),source_size);
 		const string source_code(Source.begin(),Source.end());
-		stringstream source_code_ss(source_code);
-		while(source_code_ss){
-			string line;
-			getline(source_code_ss,line);
-			Program_Base85_File << "//" << line << '\n';
-		}
+		Program_Base85_File << "#if 0" << endl;
+		Program_Base85_File << source_code << endl;
+		Program_Base85_File << "#endif" << endl;
 	}
 }
