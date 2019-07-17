@@ -132,6 +132,7 @@ int main(int argc,char** argv){
 		Source_File.read(reinterpret_cast<char*>(Source.data()),source_size);
 		const string source_code(Source.begin(),Source.end());
 		Program_Base85_File << "#if 0" << endl;
+		Program_Base85_File << "//Source file: " << Source_Filename << endl;
 		Program_Base85_File << source_code << endl;
 		Program_Base85_File << "#endif" << endl;
 	}
