@@ -21,16 +21,9 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
     Base85_Size=$(wc -c <"$Base85_Filename")
     If0_Line=$(sed -n '/#if 0/=' $Base85_Filename)
     let If0_NextLine=$If0_Line+2
-    Compiler_Version=$("$Compiler" --version | head -n 1)
-    echo "$If0_NextLine"' s/^/ Compiled with '"$Compiler_Version"'\n/'
-    sed -i "$If0_NextLine"' s/^/\/\/Compiled with '"$Compiler_Version"'\n/' $Base85_Filename
-    if [ $Base85_Size -gt 100000 ]; then
-    	echo File exceeded 100ko, not including source code as comment
-    	sed -i -e "$If0_Line"',$d' $Base85_Filename
-    fi
-
-    if [ $Base85_Size -gt 100000 ]; then
-    	echo File still too large to be used on Codingame
+    if [[ $If0_Line -ne 0 ]]; then
+        Compiler_Version=$("$Compiler" --version | head -n 1)
+        sed -i "$If0_NextLine"' s/^/\/\/Compiled with '"$Compiler_Version"'\n/' $Base85_Filename
     fi
 	
 	#Cleanup

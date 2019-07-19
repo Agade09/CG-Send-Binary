@@ -6,6 +6,8 @@
 #include <cmath>
 using namespace std;
 
+constexpr int Code_Size_Limit{100000};
+
 constexpr char en85[]{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~"};
 char de85[256];
 
@@ -100,6 +102,11 @@ string encode_85(const vector<unsigned char> &data){
 	return out;
 }
 
+ifstream::pos_type Get_File_Size(const string filename){
+    std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
+    return in.tellg(); 
+}
+
 int main(int argc,char** argv){
 	if(argc<2){
 		cerr << "Program takes at least one argument, the name of the program to convert to base 85" << endl;
@@ -112,6 +119,7 @@ int main(int argc,char** argv){
 	}
 	const streamsize binary_size{Program_File.tellg()};
 	Program_File.seekg(0,ios::beg);
+	const long binary_bytes{binary_size-Program_File.tellg()};
 	vector<unsigned char> Program_Binary(binary_size);
 	Program_File.read(reinterpret_cast<char*>(Program_Binary.data()),binary_size);
 	for(int i=0;i<85;i++){
@@ -121,19 +129,26 @@ int main(int argc,char** argv){
 	const string base85_Program_Binary=encode_85(Program_Binary);
 	ofstream Program_Base85_File(Program_Name+"_Base85.cpp",ios::trunc);
 	Program_Base85_File << half1 << base85_Program_Binary << half2 << endl;
-
+	const size_t size_before_comments{string(half1).size()+binary_bytes+string(half2).size()};
+	if(size_before_comments>Code_Size_Limit){
+		cerr << "Warning: Base85 encoded binary is too large to be sent to Codingame" << endl;
+	}
 	if(argc>=3){//Append source code as comment
 		const string Source_Filename{argv[2]};
 		ifstream Source_File(Source_Filename,ios::ate);
 		const streamsize source_size{Source_File.tellg()};
-		cerr << source_size << endl;
 		Source_File.seekg(0,ios::beg);
 		vector<char> Source(source_size);
 		Source_File.read(reinterpret_cast<char*>(Source.data()),source_size);
 		const string source_code(Source.begin(),Source.end());
-		Program_Base85_File << "#if 0" << endl;
-		Program_Base85_File << "//Source file: " << Source_Filename << endl;
-		Program_Base85_File << source_code << endl;
-		Program_Base85_File << "#endif" << endl;
+		if(size_before_comments+source_code.size()<=Code_Size_Limit){
+			Program_Base85_File << "#if 0" << endl;
+			Program_Base85_File << "//Source file: " << Source_Filename << endl;
+			Program_Base85_File << source_code << endl;
+			Program_Base85_File << "#endif" << endl;
+		}
+		else{
+			cerr << "Warning: Could not include source code as a comment without exceeding Codingame code size limit" << endl;
+		}
 	}
 }
