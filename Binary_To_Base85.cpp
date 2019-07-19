@@ -141,7 +141,7 @@ int main(int argc,char** argv){
 		vector<char> Source(source_size);
 		Source_File.read(reinterpret_cast<char*>(Source.data()),source_size);
 		const string source_code(Source.begin(),Source.end());
-		if(size_before_comments+source_code.size()<=Code_Size_Limit){
+		if(size_before_comments+source_code.size()<=Code_Size_Limit || size_before_comments>Code_Size_Limit){//If the file is going to be too big anyway, we might as well include the comments
 			Program_Base85_File << "#if 0" << endl;
 			Program_Base85_File << "//Source file: " << Source_Filename << endl;
 			Program_Base85_File << source_code << endl;
