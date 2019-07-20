@@ -112,6 +112,10 @@ int main(int argc,char** argv){
 		cerr << "Program takes at least one argument, the name of the program to convert to base 85" << endl;
 	}
 	const string Program_Name{argv[1]};
+	if(Program_Name=="--version"){
+		cout << "CG-Send-Binary V1.0\nBy github.com/Agade09" << endl;
+		return 0;
+	}
 	ifstream Program_File(Program_Name,ios::binary | ios::ate);
 	if(!Program_File){
 		cerr << "Couldn't open " << Program_Name << endl;
