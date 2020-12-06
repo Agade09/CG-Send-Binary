@@ -17,7 +17,7 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
 	strip -S --strip-unneeded --remove-section=.note.gnu.gold-version --remove-section=.comment --remove-section=.note --remove-section=.note.gnu.build-id --remove-section=.note.ABI-tag "$AI_Name"
 	upx "$AI_Name" --ultra-brute --no-backup
 	Binary_To_Base65536.py "$AI_Name" "$AI_Name".cpp #Make the copy-pastable .cpp file containing the base85-encoded binary
-    Base65536_Filename="$AI_Name"_Base85.cpp
+    Base65536_Filename="$AI_Name"_Base65536.py
     #Base65536_Size=$(wc -c <"$Base65536_Filename")
     If0_Line=$(sed -n '/#if 0/=' $Base65536_Filename)
     let If0_NextLine=$If0_Line+2
