@@ -2,7 +2,7 @@ if [ $# -lt 1 ]; then
     echo "$0: Takes at least one argument, the name of the AI to compile"
     exit 1
 fi
-Compiler=g++-10
+Compiler=g++-10 #clang++-11
 AI_Name=$1 #Get the AI name you passed as a command line parameter
 AI_Name="${AI_Name%.*}" #Remove extension in case you passed "V4.cpp" instead of "V4"
 if [ -f "$AI_Name".cpp ]; then #If the file exists
