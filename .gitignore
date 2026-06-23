@@ -2,4 +2,6 @@
 !Binary_To_Base65536.py
 !.gitignore
 !README.md
-!Base65536.sh
+!Base65536.sh# pixi environments
+.pixi/*
+!.pixi/config.toml
