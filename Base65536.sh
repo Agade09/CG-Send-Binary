@@ -22,6 +22,11 @@ if [ -f "$AI_Name".cpp ]; then #If the file exists
 	#Make the copy-pastable self-unpacking .py (LZMA-compressed, base65536-encoded)
 	./Binary_To_Base65536.py "$AI_Name"
 
+	#Report the character count (CodinGame's limit is 100k characters, not 100kB).
+	#Count Unicode code points, not bytes, since base65536 uses multi-byte characters.
+	Char_Count=$(python3 -c 'import sys; print(len(open(sys.argv[1], encoding="utf-8").read()))' "$AI_Name"_Base65536.py)
+	echo "$AI_Name"_Base65536.py": $Char_Count characters (limit 100000)"
+
 	#Cleanup
 	rm "$AI_Name" #Remove the AI binary
 	rm "$AI_Name"_nopragma.cpp #Remove the copy of your code
